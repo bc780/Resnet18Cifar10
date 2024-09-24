@@ -20,4 +20,4 @@ export MASTER_PORT=29500
 
 #run the application:
 #applications may perform better with --gpu-bind=none instead of --gpu-bind=single:1 
-srun -n 1 -c 128 --cpu_bind=cores -G 1 --gpu-bind=single:1  train.py
+srun -n 1 -c 128 --cpu_bind=cores -G 1 --gpu-bind=none python train.py

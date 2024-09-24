@@ -52,8 +52,8 @@ if __name__ == "__main__":
         else "cpu"
     )
 
-    train_data = datasets.CIFAR10(train=True, transform=ToTensor())
-    val_data = datasets.CIFAR10(train=False, transform=ToTensor())
+    train_data = datasets.CIFAR10(root="data", train=True, download=True, transform=ToTensor())
+    val_data = datasets.CIFAR10(root="data", train=False, download=True, transform=ToTensor())
 
     train_dataloader = DataLoader(train_data, batch_size=batchsize, shuffle=True)
     val_dataloader = DataLoader(val_data, batch_size=batchsize, shuffle=True)
