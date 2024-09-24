@@ -6,7 +6,7 @@
 #SBATCH -J Resnet18
 #SBATCH --mail-user=bc780@scarletmail.rutgers.edu
 #SBATCH --mail-type=ALL
-#SBATCH -t 00:15:00
+#SBATCH -t 00:01:00
 #SBATCH -A m4431_g
 
 #OpenMP settings:

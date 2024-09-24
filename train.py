@@ -5,9 +5,10 @@ from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
 import logging
 import torch.nn as nn
+from utils.logging import config_logging
 
 batchsize = 64
-epochs=5
+epochs= 5
 lr = 0.001
 
 def train(device, model, dataLoader, loss_fn):
@@ -15,8 +16,8 @@ def train(device, model, dataLoader, loss_fn):
     sum = 0.0
     count = 0.0
     for batch, (image, label) in enumerate(dataLoader):
-        image = image.to(device)
-        label = label.to(device)
+        # image = image.to(device)
+        # label = label.to(device)
 
         pred = model(image)
         loss = loss_fn(pred, label)
@@ -35,8 +36,8 @@ def val(device, model, dataLoader):
 
     with torch.no_grad():
         for image, label in dataLoader:
-            image = image.to(device)
-            label = label.to(device)
+            # image = image.to(device)
+            # label = label.to(device)
 
             pred = model(image)
             correct += (pred.argmax(1) == label).type(torch.float).sum().item()
@@ -44,6 +45,10 @@ def val(device, model, dataLoader):
 
 
 if __name__ == "__main__":
+
+    config_logging(verbose=True)
+
+    logging.info("start")
     device = (
         "cuda"
         if torch.cuda.is_available()
@@ -51,13 +56,13 @@ if __name__ == "__main__":
         if torch.backends.mps.is_available()
         else "cpu"
     )
-
+    logging.info("datasets")
     train_data = datasets.CIFAR10(root="data", train=True, download=True, transform=ToTensor())
     val_data = datasets.CIFAR10(root="data", train=False, download=True, transform=ToTensor())
-
+    logging.info("dataloaders")
     train_dataloader = DataLoader(train_data, batch_size=batchsize, shuffle=True)
     val_dataloader = DataLoader(val_data, batch_size=batchsize, shuffle=True)
-
+    logging.info("model")
     model = models.resnet18()
     loss_fn = nn.CrossEntropyLoss()
 
