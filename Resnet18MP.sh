@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -C gpu
-#SBATCH -G 1
-#SBATCH -q shared
-#SBATCH -J Resnet18
+#SBATCH -G 2
+#SBATCH -q regular
+#SBATCH -J ResnetModelParallel
 #SBATCH --mail-user=bc780@scarletmail.rutgers.edu
 #SBATCH --mail-type=ALL
-#SBATCH -t 02:00:00
+#SBATCH -t 01:00:00
 #SBATCH -A m4431_g
 
 #OpenMP settings:
@@ -20,4 +20,4 @@ export MASTER_PORT=29500
 
 #run the application:
 #applications may perform better with --gpu-bind=none instead of --gpu-bind=single:1 
-srun -n 1 -c 128 --cpu_bind=cores -G 1 --gpu-bind=none python train.py
+srun -n 2 -c 64 --cpu_bind=cores -G 2 --gpu-bind=single:1 python train_mp.py
